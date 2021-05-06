@@ -57,25 +57,46 @@ export default {
 
     .tracks-container {
         width: 80%;
-        height: calc(100vh - 50px);
+        height: calc(100vh - 80px);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 50px;
+        padding: 80px;
         animation: 4s fadein;
         overflow: scroll;
     } 
 
     .page-title {
-        width: 20%;
-        min-width: 264px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
         display: flex;
         justify-content: center;
+        align-items: center;
         font-size: 36px;
         font-weight: bold;
         box-shadow: 5px 5px 5px #111111;
         animation: 4s fadein;
-        padding-top: 56px;
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.8);
+        z-index: 99;
+        background-color: #c31432;
+    }
+
+    @media (min-width: 700px) {
+        .page-title {
+            position: relative;
+            width: 20%;
+            min-width: 264px;
+            height: 100vh;
+            padding-top: 56px;
+            background-color: rgba(0, 0, 0, 0);
+            align-items: flex-start;
+        }
+
+        .tracks-container {
+            padding: 50px;
+        }
     }
 </style>
