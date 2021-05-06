@@ -27,7 +27,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	service.Server.Shutdown(ctx)
+	service.Shutdown(ctx)
 
 	log.Printf("[+] Graceful shutdown completed")
 }
