@@ -85,7 +85,7 @@ func (s *Service) ListTracks(w http.ResponseWriter, r *http.Request) {
 	deezerData, err := s.Redis.Get(ctx, "tracks").Result()
 	if err != nil {
 		log.Println("[+] Refreshing tracks")
-		deezerData, err := RefreshTracks()
+		deezerData, err = RefreshTracks()
 		if err != nil {
 			log.Println(err)
 			http.Error(w, "failed to refresh tracks", http.StatusInternalServerError)
