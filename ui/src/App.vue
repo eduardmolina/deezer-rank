@@ -24,7 +24,7 @@ export default {
         Track
     },
     mounted: function () {
-        api.get('/chart/0/tracks?limit=50').then(response => {
+        api.get('/api/tracks').then(response => {
             this.tracks = response.data.data;
         });
     }
