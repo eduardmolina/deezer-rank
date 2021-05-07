@@ -88,7 +88,7 @@ func (s *Service) ListTracks(w http.ResponseWriter, r *http.Request) {
 		deezerData, err := RefreshTracks()
 		if err != nil {
 			log.Println(err)
-			http.Error(w, "[-] Failed to refresh tracks", http.StatusInternalServerError)
+			http.Error(w, "failed to refresh tracks", http.StatusInternalServerError)
 			return
 		}
 
