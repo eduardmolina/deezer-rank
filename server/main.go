@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	service, err := NewService("3000", "./static")
+	service, err := NewService("80", "./static")
 	if err != nil {
 		log.Fatal(err)
 	}

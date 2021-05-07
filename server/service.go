@@ -26,7 +26,7 @@ func NewService(port string, staticPath string) (*Service, error) {
 	}
 
 	rds := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "redis:6379",
 		Password: "",
 		DB:       0,
 	})
