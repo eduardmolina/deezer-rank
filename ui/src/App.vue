@@ -1,10 +1,30 @@
 <template>
     <main>
-        <div class='page-title'>
-            Deezer Rank
+        <div class='appbar'>
+            <div class='appbar-header'>
+                <span
+                    v-if='!mobileSearchBarOpened || screenWidth >= 700'
+                    style='animation: 0.5s fadein'
+                >
+                    Deezer Rank
+                </span>
+                <span
+                    @click='toggleSearchBar'
+                    class='material-icons search-icon'
+                >
+                    search
+                </span>
+            </div>
+            <SearchBar
+                v-if='mobileSearchBarOpened || screenWidth >= 700'
+                @onsearch='onSearch'
+            />
         </div>
-        <div class='tracks-container'>
-            <div v-for='(track, index) in tracks' :key='track.id'>
+        <div v-if='!searchingTracks.length && mounted' class='not-found'>
+            Nada encontrado
+        </div>
+        <div v-else class='tracks-container'>
+            <div v-for='(track, index) in searchingTracks' :key='track.id'>
                 <Track :title='(index + 1) + "# " + track.title' :imgSrc='track.album.cover' :previewSrc='track.preview' />
             </div>
         </div>
@@ -12,21 +32,44 @@
 </template>
 
 <script>
-import Track from './components/Track.vue'
+import SearchBar from './components/SearchBar.vue';
+import Track from './components/Track.vue';
+
 import api from './services/api.js';
 
 export default {
     name: 'App',
     data: () => ({
-        tracks: []
+        tracks: [],
+        searchingTracks: [],
+        mounted: false,
+        mobileSearchBarOpened: false,
+        screenWidth: window.innerWidth
     }),
     components: {
+        SearchBar,
         Track
+    },
+    methods: {
+        onSearch: function (searchTerm) {
+            this.searchingTracks = this.tracks.filter(
+                (track) => track.title.toLowerCase()
+                           .indexOf(searchTerm.toLowerCase()) !== -1);
+        },
+        toggleSearchBar: function () {
+            this.mobileSearchBarOpened = !this.mobileSearchBarOpened;
+        },
+        onResize: function () {
+            this.screenWidth = window.innerWidth;
+        }
     },
     mounted: function () {
         api.get('/api/tracks').then(response => {
             this.tracks = response.data.data;
+            this.searchingTracks = this.tracks;
+            this.mounted = true;
         });
+        window.addEventListener('resize', this.onResize);
     }
 }
 </script>
@@ -66,15 +109,16 @@ export default {
         overflow: scroll;
     } 
 
-    .page-title {
+    .appbar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 60px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
         font-size: 36px;
         font-weight: bold;
         box-shadow: 5px 5px 5px #111111;
@@ -85,18 +129,41 @@ export default {
     }
 
     @media (min-width: 700px) {
-        .page-title {
+        .appbar {
             position: relative;
+            justify-content: flex-start;
             width: 20%;
             min-width: 264px;
             height: 100vh;
             padding-top: 56px;
             background-color: rgba(0, 0, 0, 0);
-            align-items: flex-start;
         }
 
         .tracks-container {
             padding: 50px;
+        }
+    }
+
+    .not-found {
+        width: 84%;
+        font: normal normal 600 24px Cairo;
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-icon {
+        font-size: 30px;
+        position: absolute;
+        right: 0;
+        bottom: calc(50% - 16px);
+        margin-right: 16px;
+    }
+
+    @media (min-width: 700px) {
+        .search-icon {
+            display: none;
         }
     }
 </style>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:80/'
+    baseURL: 'https://cors-anywhere.herokuapp.com/https://deezer-rank.herokuapp.com/'
 });
 
 export default api;

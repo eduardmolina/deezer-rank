@@ -109,7 +109,7 @@ export default {
     .play-btn {
         width: 50px;
         height: 50px;
-        background-color: #FFFFFF;
+        background-color: rgba(255, 255, 255, 0.7);
         border-radius: 50%;
         position: absolute;
         top: calc(50% - 25px);
