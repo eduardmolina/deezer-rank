@@ -26,7 +26,7 @@ func NewService(port string, staticPath string) (*Service, error) {
 	}
 
 	rds := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379", // host should be localhost if running into heroku
+		Addr:     "localhost:6379", // host should be localhost if running into heroku
 		Password: "",
 		DB:       0,
 	})

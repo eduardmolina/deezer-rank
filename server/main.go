@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	service, err := NewService("80", "./static") // port arg should be os.GetEnv("PORT") to run into heroku
+	service, err := NewService(os.Getenv("PORT"), "./static") // port arg should be os.Getenv("PORT") to run into heroku
 	if err != nil {
 		log.Fatal(err)
 	}
