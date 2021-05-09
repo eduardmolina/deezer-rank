@@ -110,7 +110,7 @@ export default {
     }
 
     .tracks-container {
-        width: calc(180% - 264px));
+        width: 100%;
         height: calc(100vh - 80px);
         display: flex;
         flex-wrap: wrap;
