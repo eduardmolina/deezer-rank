@@ -19,6 +19,7 @@
                 v-if='mobileSearchBarOpened || screenWidth >= 700'
                 @onsearch='onSearch'
             />
+            <span class='slider' />
         </div>
         <div v-if='!searchingTracks.length && mounted' class='not-found'>
             Nada encontrado
@@ -98,8 +99,18 @@ export default {
         to   { opacity: 1; }
     }
 
+    @keyframes horizontal-slide {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+
+    @keyframes vertical-slide {
+        from { height: 0; }
+        to { height: 100vh; }
+    }
+
     .tracks-container {
-        width: 80%;
+        width: calc(180% - 264px));
         height: calc(100vh - 80px);
         display: flex;
         flex-wrap: wrap;
@@ -121,31 +132,16 @@ export default {
         justify-content: center;
         font-size: 36px;
         font-weight: bold;
-        box-shadow: 5px 5px 5px #111111;
+        box-shadow: 5px 0px 5px #111111;
         animation: 4s fadein;
         color: rgba(255, 255, 255, 0.8);
         z-index: 99;
         background-color: #c31432;
     }
 
-    @media (min-width: 700px) {
-        .appbar {
-            position: relative;
-            justify-content: flex-start;
-            width: 20%;
-            min-width: 264px;
-            height: 100vh;
-            padding-top: 56px;
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .tracks-container {
-            padding: 50px;
-        }
-    }
-
     .not-found {
-        width: 84%;
+        width: 100%;
+        height: 100vh;
         font: normal normal 600 24px Cairo;
         color: rgba(255, 255, 255, 0.8);
         display: flex;
@@ -161,9 +157,45 @@ export default {
         margin-right: 16px;
     }
 
+    .slider {
+        position: fixed;
+        top: 58px;
+        width: 100%;
+        height: 2px;
+        background-color: rgba(255, 255, 255, 0.6);
+        animation: 4s horizontal-slide;
+    }
+
     @media (min-width: 700px) {
+        .appbar {
+            position: relative;
+            justify-content: flex-start;
+            width: 264px;
+            min-width: 264px;
+            height: 100vh;
+            padding-top: 56px;
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .tracks-container {
+            padding: 50px;
+        }
+
         .search-icon {
             display: none;
+        }
+
+        .not-found {
+            width: 84%;
+        }
+
+        .slider {
+            width: 2px;
+            height: 100vh;
+            left: 262px;
+            top: 0;
+            animation: 4s vertical-slide;
+            background-color: rgba(255, 255, 255, 0.2);
         }
     }
 </style>
